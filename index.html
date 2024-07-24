@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <meta charset=UTF-8>
-<title>Ages of US Presidents and 2020 Candidates</title>
+<title>Ages of US Presidents and 2024 Candidates</title>
 <!--
    Copyright 2019 L. David Baron
 
@@ -28,12 +28,13 @@
 .age-dot-label { dominant-baseline: middle; font-size: 12px; }
 
 </style>
-<h1>Ages of US Presidents and 2020 Candidates</h1>
-<svg id="graph" viewBox="0 0 930 600"></svg>
+<h1>Ages of US Presidents and 2024 Candidates</h1>
+<svg id="graph" viewBox="0 0 1000 600"></svg>
 
 <script>
 
 let gPresidents = [
+  { start: "1933-03-04", name: "FDR", birth: "1882-01-30" },
   { start: "1945-04-12", name: "Truman", birth: "1884-05-08" },
   { start: "1953-01-20", name: "Eisenhower", birth: "1890-10-14" },
   { start: "1961-01-20", name: "Kennedy", birth: "1917-05-29" },
@@ -47,6 +48,7 @@ let gPresidents = [
   { start: "2001-01-20", name: "Bush, GW", birth: "1946-07-06" },
   { start: "2009-01-20", name: "Obama", birth: "1961-08-04" },
   { start: "2017-01-20", name: "Trump", birth: "1946-06-14" },
+  { start: "2021-01-20", name: "Biden", birth: "1942-11-20" },
 ];
 
 function date_to_float_year(date) {
@@ -79,35 +81,10 @@ for (let index in gPresidents) {
 }
 gPresidents[gPresidents.length - 1].end = date_to_float_year(new Date());
 
-// https://en.wikipedia.org/wiki/2020_Democratic_Party_presidential_primaries#Declared_candidates
-// https://en.wikipedia.org/wiki/2020_Democratic_Party_presidential_primaries#Qualification_of_candidates_for_debates
 let gCandidates = [
-  //{ name: "Bennet", birth: "1964-11-28" },
-  { name: "Biden", birth: "1942-11-20" },
-  { name: "Bloomberg", birth: "1942-02-14" },
-  //{ name: "Booker", birth: "1969-04-27" },
-  //{ name: "Bullock", birth: "1966-04-11" },
-  { name: "Buttigieg", birth: "1982-01-19" },
-  //{ name: "Castro", birth: "1974-09-16" },
-  //{ name: "de Blasio", birth: "1961-05-08" },
-  //{ name: "Delaney", birth: "1963-04-16" },
-  //{ name: "Gabbard", birth: "1981-04-12" },
-  //{ name: "Gillibrand", birth: "1966-12-09" },
-  //{ name: "Gravel", birth: "1930-05-13" },
-  //{ name: "Harris", birth: "1964-10-20" },
-  //{ name: "Hickenlooper", birth: "1952-02-07" },
-  //{ name: "Inslee", birth: "1951-02-09" },
-  { name: "Klobuchar", birth: "1960-05-25" },
-  //{ name: "Messam", birth: "1974-06-07" },
-  //{ name: "Moulton", birth: "1978-10-24" },
-  //{ name: "O'Rourke", birth: "1972-09-26" },
-  //{ name: "Ryan", birth: "1973-07-16" },
-  { name: "Sanders", birth: "1941-09-08" },
-  { name: "Steyer", birth: "1957-06-27" },
-  //{ name: "Swalwell", birth: "1980-11-16" },
-  { name: "Warren", birth: "1949-06-22" },
-  //{ name: "Williamson", birth: "1952-07-08" },
-  { name: "Yang", birth: "1975-01-13" },
+  { name: "Harris", birth: "1964-10-20" },
+  { name: "Trump", birth: "1946-06-14" },
+  { name: "Vance", birth: "1984-08-02" },
 ];
 
 for (let entry of gCandidates) {
@@ -115,9 +92,9 @@ for (let entry of gCandidates) {
 }
 
 function transform_coord(year, age) {
-  // year space is 1940-2030
+  // year space is 1930-2030
   // age space is 30-90
-  let x = (year - 1940) * 10;
+  let x = (year - 1930) * 10;
   let y = (90 - age) * 10;
   return {x, y};
 }
@@ -147,14 +124,14 @@ let gGraph = document.getElementById("graph");
 
 {
   let x_axis = document.createElementNS(SVG_NS, "line");
-  set_line_1(x_axis, transform_coord(1944, 35));
-  set_line_2(x_axis, transform_coord(2022, 35));
+  set_line_1(x_axis, transform_coord(1932, 35));
+  set_line_2(x_axis, transform_coord(2026, 35));
   x_axis.setAttribute("class", "axis-line");
   x_axis.setAttribute("id", "x-axis-line");
 
   let y_axis = document.createElementNS(SVG_NS, "line");
-  set_line_1(y_axis, transform_coord(1944, 35));
-  set_line_2(y_axis, transform_coord(1944, 85));
+  set_line_1(y_axis, transform_coord(1932, 35));
+  set_line_2(y_axis, transform_coord(1932, 85));
   y_axis.setAttribute("class", "axis-line");
   y_axis.setAttribute("id", "y-axis-line");
 
@@ -165,14 +142,14 @@ let gGraph = document.getElementById("graph");
 for (let tick = 40; tick < 83; tick += 5) {
   let line = document.createElementNS(SVG_NS, "line");
   line.setAttribute("class", "tick-line");
-  set_line_1(line, transform_coord(1944, tick));
-  set_line_2(line, transform_coord(2021, tick));
+  set_line_1(line, transform_coord(1932, tick));
+  set_line_2(line, transform_coord(2025, tick));
   gGraph.appendChild(line);
 
   let text = document.createElementNS(SVG_NS, "text");
   text.setAttribute("class", "age-tick-label");
   text.textContent = tick;
-  set_xy(text, transform_coord(1943.5, tick));
+  set_xy(text, transform_coord(1931.5, tick));
   gGraph.appendChild(text);
 }
 
@@ -195,9 +172,9 @@ for (let president of gPresidents) {
   gGraph.appendChild(text);
 }
 
-let gNextInauguration = datestr_to_float_year("2021-01-20");
-let gYearAfterInaug = datestr_to_float_year("2022-01-20");
-let gTextAfterInaug = datestr_to_float_year("2022-03-20");
+let gNextInauguration = datestr_to_float_year("2025-01-20");
+let gYearAfterInaug = datestr_to_float_year("2026-01-20");
+let gTextAfterInaug = datestr_to_float_year("2026-03-20");
 
 let gTextsToSpread = [];
 
